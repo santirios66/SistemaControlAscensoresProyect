@@ -6,7 +6,7 @@ package modelo;
 public class Piso {
 
     // Numero del piso
-    protected int numero;
+    private int numero;
 
     // Botones del piso
     protected BotonPiso botonSubir;

@@ -3,9 +3,9 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Representa un edificio que contiene pisos y ascensores.
- */
+
+  //Representa un edificio que contiene pisos y ascensores.
+ 
 public class Edificio {
 
     // Atributos
@@ -30,9 +30,9 @@ public class Edificio {
         ascensores.add(ascensor);
     }
 
-    /**
-     * Devuelve el ascensor más cercano al piso indicado.
-     */
+    
+      //Devuelve el ascensor más cercano al piso indicado.
+     
     public Ascensor getAscensorCercano(int pisoActual) {
         if (ascensores.isEmpty()) {
             return null;
