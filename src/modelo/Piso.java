@@ -1,8 +1,8 @@
 package modelo;
 
-/**
- * Representa un piso del edificio.
- */
+
+ //Representa un piso del edificio.
+ 
 public class Piso {
 
     // Numero del piso
