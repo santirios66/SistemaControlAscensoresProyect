@@ -1,33 +1,46 @@
 package control;
+
 import modelo.Edificio;
 import modelo.Piso;
+import util.RegistroEventos;
 
 public class SistemaControl {
-    
+
     private Edificio edificio;
     private GestorSolicitudes gestorSolicitudes;
     private GestorAlertas gestorAlertas;
     private GestorMantenimiento gestorMantenimiento;
+    private RegistroEventos registroEventos;
 
     // Constructor
-    public SistemaControl(Edificio edificio){
+    public SistemaControl(Edificio edificio) {
         this.edificio = edificio;
+
+        // Inicializamos el objeto compartido que usará GestorAlertas y otros si es
+        // necesario
+        this.registroEventos = new RegistroEventos();
+
         this.gestorSolicitudes = new GestorSolicitudes(edificio);
-        this.gestorAlertas = new GestorAlertas(edificio);
-        this.gestorMantenimiento = new GestorMantenimiento(edificio);
+
+        this.gestorAlertas = new GestorAlertas(this.registroEventos);
+
+        this.gestorMantenimiento = new GestorMantenimiento(this.registroEventos);
     }
 
     // procesa una solicitud de ascensor
-    public void procesarSolicitud(Piso piso, String direccion){
-        System.out.println("Procesando solicitud desde piso " + piso.getNumero() + " hacia "  + direccion);
+    public void procesarSolicitud(Piso piso, String direccion) {
+        System.out.println("Procesando solicitud desde piso " + piso.getNumero() + " hacia " + direccion);
         gestorSolicitudes.registrarSolicitud(piso.getNumero(), direccion);
-        gestorSolicitudes.asignarAscensor(edificio);
+
+        gestorSolicitudes.asignarAscensor();
     }
 
-        // Actualiza el estado general del sistema
+    // Actualiza el estado general del sistema
     public void actualizarEstado() {
         System.out.println("Actualizando estado del sistema...");
         edificio.mostrarEstado();
+        // Opcional: registrar el evento en el log
+        registroEventos.registrarEvento("Estado del sistema actualizado.");
     }
 
     // Detecta posibles fallas o alertas
@@ -36,24 +49,36 @@ public class SistemaControl {
         gestorAlertas.enviarAlerta("Chequeo general del sistema completado.");
     }
 
-    // Getters
-    public Edificio getEdificio() { return edificio; }
-    public GestorSolicitudes getGestorSolicitudes() { return gestorSolicitudes; }
-    public GestorAlertas getGestorAlertas() { return gestorAlertas; }
-    public GestorMantenimiento getGestorMantenimiento() { return gestorMantenimiento; }
+    // Getters (Añadimos el getter para registroEventos)
+    public Edificio getEdificio() {
+        return edificio;
+    }
 
-    // Solo se incluyen getters, ya que los gestores y el edificio se inicializan
-    // al crear el sistema y no deben modificarse desde fuera
+    public GestorSolicitudes getGestorSolicitudes() {
+        return gestorSolicitudes;
+    }
+
+    public GestorAlertas getGestorAlertas() {
+        return gestorAlertas;
+    }
+
+    public GestorMantenimiento getGestorMantenimiento() {
+        return gestorMantenimiento;
+    }
+
+    public RegistroEventos getRegistroEventos() {
+        return registroEventos;
+    }
 
     @Override
     public String toString() {
         return "SistemaControl{" +
-                "edificio=" + edificio +
+        // Cambiado para evitar recursión infinita llamando al toString completo del
+        // Edificio
+                "edificio=" + (edificio != null ? edificio.getNombre() : "N/A") +
                 ", gestorSolicitudes=" + gestorSolicitudes +
                 ", gestorAlertas=" + gestorAlertas +
                 ", gestorMantenimiento=" + gestorMantenimiento +
                 '}';
     }
-}
-
 }
