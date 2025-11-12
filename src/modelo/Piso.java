@@ -1,16 +1,11 @@
 package modelo;
 
+//Representa un piso del edificio.
+    public class Piso {
 
- //Representa un piso del edificio.
- 
-public class Piso {
-
-    // Numero del piso
     private int numero;
-
-    // Botones del piso
-    protected BotonPiso botonSubir;
-    protected BotonPiso botonBajar;
+    private BotonPiso botonSubir;
+    private BotonPiso botonBajar;
 
     // Constructor
     public Piso(int numero) {
@@ -19,20 +14,30 @@ public class Piso {
         this.botonBajar = new BotonPiso("bajar");
     }
 
+    // Método para solicitar el ascensor
+    public void solicitarAscensor(String direccion) {
+        if (direccion.equalsIgnoreCase("subir")) {
+            botonSubir.presionar();
+        } else if (direccion.equalsIgnoreCase("bajar")) {
+            botonBajar.presionar();
+        } else {
+            System.out.println("Dirección no válida. Usa 'subir' o 'bajar'.");
+        }
+    }
+
     // Getters
     public int getNumero() { return numero; }
     public BotonPiso getBotonSubir() { return botonSubir; }
     public BotonPiso getBotonBajar() { return botonBajar; }
 
-    // Método para solicitar el ascensor
-    public void solicitarAscensor(String direccion) {
-        System.out.println("Piso " + numero + " solicita ascensor hacia " + direccion);
-    }
-
+    // toString
     @Override
     public String toString() {
         return "Piso{" +
                 "numero=" + numero +
+                ", botonSubir=" + botonSubir +
+                ", botonBajar=" + botonBajar +
                 '}';
     }
 }
+
