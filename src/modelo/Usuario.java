@@ -1,7 +1,7 @@
 package modelo;
 
 import seguridad.TarjetaAcceso;
-import seguridad.TarjetaAcceso; // Importa la clase TarjetaAcceso
+// Importa la clase TarjetaAcceso
 
 // Representa un usuario del sistema que puede usar el ascensor
 public class Usuario {
