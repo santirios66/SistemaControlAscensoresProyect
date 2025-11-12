@@ -36,30 +36,33 @@ El sistema lo diseñe basado en los principios  de POO  en la cual cada
 clase representa un componente del sisteme(ascensor, piso,puertas,boton,sensor, etc.) con una responsabilidad bien definida.
 Use encapsulacion para proteger los atributos, La herencia para especilizar los comportamientos y el polimorfismo para tratar los objectos similares de forma generica a continuacion le mostrare  la Estructura del proyecto :
  
- ├── control/
- │   ├── SistemaControl.java
- │   ├── GestorSolicitudes.java
- │   ├── GestorAlertas.java
- │   └── GestorMantenimiento.java
- │
- ├── modelo/
- │   ├── Ascensor.java
- │   ├── Piso.java
- │   ├── Puerta.java
- │   ├── Sensor.java
- │   ├── Boton.java
- │   ├── BotonPiso.java
- │   ├── BotonAscensor.java
- │   └── PanelControl.java
- │
- ├── seguridad/
- │   ├── Camara.java
- │   ├── Alarma.java
- │   └── TarjetaAcceso.java
- │
- └── util/
-     ├── RegistroEventos.java
-     └── Temporizador.java
+├── src/
+│    ├── control/
+│    │   ├── SistemaControl.java
+││   │   ├── GestorSolicitudes.java
+││   │   ├── GestorAlertas.java
+││   │   ├── GestorMantenimiento.java
+││   │   └── Usuario.java         
+│    │
+│    ├── modelo/
+│    │   ├── Edificio.java         
+│    │   ├── Ascensor.java
+││   │   ├── Piso.java
+││   │   ├── Puerta.java
+││   │   ├── Sensor.java
+││   │   ├── Boton.java
+││   │   ├── BotonPiso.java
+││   │   ├── BotonAscensor.java
+││   │   └── PanelControl.java    
+│    │
+│    ├── seguridad/
+│    │   ├── Camara.java
+││   │   ├── Alarma.java
+││   │   └── TarjetaAcceso.java
+│    │
+│    └── util/
+│       ├── RegistroEventos.java
+│       └── Temporizador.java
 
 3.1 Diagrama de Clases
 Puedes ver el diagrama de clases en el siguiente enlace:
