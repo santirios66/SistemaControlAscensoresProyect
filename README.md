@@ -42,7 +42,7 @@ Use encapsulacion para proteger los atributos, La herencia para especilizar los 
 ││   │   ├── GestorSolicitudes.java
 ││   │   ├── GestorAlertas.java
 ││   │   ├── GestorMantenimiento.java
-││   │   └── Usuario.java         
+         
 │    │
 │    ├── modelo/
 │    │   ├── Edificio.java         
@@ -54,7 +54,8 @@ Use encapsulacion para proteger los atributos, La herencia para especilizar los 
 ││   │   ├── BotonPiso.java
 ││   │   ├── BotonAscensor.java
 ││   │   └── PanelControl.java    
-│    │
+│    │   └── Usuario.java
+||   |
 │    ├── seguridad/
 │    │   ├── Camara.java
 ││   │   ├── Alarma.java

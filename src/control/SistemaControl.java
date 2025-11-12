@@ -2,10 +2,11 @@ package control;
 
 import modelo.Edificio;
 import modelo.Piso;
-import util.RegistroEventos;
+import modelo.Ascensor; // <-- IMPORTACIÓN NECESARIA
+import util.RegistroEventos; 
 
 public class SistemaControl {
-
+    
     private Edificio edificio;
     private GestorSolicitudes gestorSolicitudes;
     private GestorAlertas gestorAlertas;
@@ -13,33 +14,25 @@ public class SistemaControl {
     private RegistroEventos registroEventos;
 
     // Constructor
-    public SistemaControl(Edificio edificio) {
+    public SistemaControl(Edificio edificio){
         this.edificio = edificio;
-
-        // Inicializamos el objeto compartido que usará GestorAlertas y otros si es
-        // necesario
-        this.registroEventos = new RegistroEventos();
-
+        this.registroEventos = new RegistroEventos(); 
         this.gestorSolicitudes = new GestorSolicitudes(edificio);
-
-        this.gestorAlertas = new GestorAlertas(this.registroEventos);
-
-        this.gestorMantenimiento = new GestorMantenimiento(this.registroEventos);
+        this.gestorAlertas = new GestorAlertas(this.registroEventos); 
+        this.gestorMantenimiento = new GestorMantenimiento(this.registroEventos); // Ahora espera RegistroEventos
     }
 
     // procesa una solicitud de ascensor
-    public void procesarSolicitud(Piso piso, String direccion) {
-        System.out.println("Procesando solicitud desde piso " + piso.getNumero() + " hacia " + direccion);
+    public void procesarSolicitud(Piso piso, String direccion){
+        System.out.println("Procesando solicitud desde piso " + piso.getNumero() + " hacia "  + direccion);
         gestorSolicitudes.registrarSolicitud(piso.getNumero(), direccion);
-
-        gestorSolicitudes.asignarAscensor();
+        gestorSolicitudes.asignarAscensor(); // Ya no necesita el argumento 'edificio'
     }
 
     // Actualiza el estado general del sistema
     public void actualizarEstado() {
         System.out.println("Actualizando estado del sistema...");
         edificio.mostrarEstado();
-        // Opcional: registrar el evento en el log
         registroEventos.registrarEvento("Estado del sistema actualizado.");
     }
 
@@ -47,35 +40,27 @@ public class SistemaControl {
     public void detectarFalla() {
         System.out.println("Verificando posibles fallas...");
         gestorAlertas.enviarAlerta("Chequeo general del sistema completado.");
+
+        // Simulamos el uso del nuevo método del GestorMantenimiento
+        // Esto asume que tienes un ascensor disponible en el edificio (ej. el primero de la lista)
+        if (!edificio.getAscensores().isEmpty()) {
+            Ascensor ascensorConFalla = edificio.getAscensores().get(0);
+            gestorMantenimiento.reportarFalla(ascensorConFalla, "Sensor de peso sobrecargado.");
+        }
     }
 
-    // Getters (Añadimos el getter para registroEventos)
-    public Edificio getEdificio() {
-        return edificio;
-    }
+    // Getters
+    public Edificio getEdificio() { return edificio; }
+    public GestorSolicitudes getGestorSolicitudes() { return gestorSolicitudes; }
+    public GestorAlertas getGestorAlertas() { return gestorAlertas; }
+    public GestorMantenimiento getGestorMantenimiento() { return gestorMantenimiento; }
+    public RegistroEventos getRegistroEventos() { return registroEventos; }
 
-    public GestorSolicitudes getGestorSolicitudes() {
-        return gestorSolicitudes;
-    }
-
-    public GestorAlertas getGestorAlertas() {
-        return gestorAlertas;
-    }
-
-    public GestorMantenimiento getGestorMantenimiento() {
-        return gestorMantenimiento;
-    }
-
-    public RegistroEventos getRegistroEventos() {
-        return registroEventos;
-    }
 
     @Override
     public String toString() {
         return "SistemaControl{" +
-        // Cambiado para evitar recursión infinita llamando al toString completo del
-        // Edificio
-                "edificio=" + (edificio != null ? edificio.getNombre() : "N/A") +
+                "edificio=" + (edificio != null ? edificio.getNombre() : "N/A") + 
                 ", gestorSolicitudes=" + gestorSolicitudes +
                 ", gestorAlertas=" + gestorAlertas +
                 ", gestorMantenimiento=" + gestorMantenimiento +
