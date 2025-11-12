@@ -1,5 +1,8 @@
 package modelo;
 
+import seguridad.TarjetaAcceso;
+import seguridad.TarjetaAcceso; // Importa la clase TarjetaAcceso
+
 // Representa un usuario del sistema que puede usar el ascensor
 public class Usuario {
 
@@ -34,10 +37,12 @@ public class Usuario {
 
     // Usa su tarjeta de acceso
     public void usarTarjeta() {
-        if (tarjeta != null && tarjeta.validarAcceso()) {
-            System.out.println(nombre + " ha validado su acceso con la tarjeta.");
+        if (tarjeta == null) {
+            System.out.println(nombre + " no tiene tarjeta de acceso.");
+        } else if (tarjeta.validarAcceso(null)) {
+            System.out.println("Accesso concedido para " + nombre + " con tarjeta: " + tarjeta);
         } else {
-            System.out.println(nombre + " no tiene acceso o la tarjeta no es válida.");
+            System.out.println("Acceso denegado para " + nombre);
         }
     }
 
@@ -59,6 +64,15 @@ public class Usuario {
     }
 
     // Setters
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setTarjeta(TarjetaAcceso tarjeta) {
+        this.tarjeta = tarjeta;
+    }
+
     public void setPisoActual(int pisoActual) {
         this.pisoActual = pisoActual;
     }
