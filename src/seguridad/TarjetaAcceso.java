@@ -14,8 +14,8 @@ public class TarjetaAcceso {
     }
 
     // --- Atributos ---
-    private final String codigo; // Código único (no cambia)
-    private final NivelAcceso nivelAcceso; // Nivel de permisos (enum)
+    private final String codigo; // Código único no puede cambiar
+    private final NivelAcceso nivelAcceso; // Nivel de permisos segun enum
 
     // --- Constructor con validación ---
     public TarjetaAcceso(String codigo, NivelAcceso nivelAcceso) {
@@ -33,6 +33,7 @@ public class TarjetaAcceso {
     // --- Método para validar acceso ---
     public boolean validarAcceso(NivelAcceso nivelRequerido) {
         // Orden lógico de seguridad: ADMINISTRADOR > MEDIO > BASICO
+        // El método ordinal() devuelve la posición en el enum (BASICO=0, MEDIO=1, ADMIN=2)
         return this.nivelAcceso.ordinal() >= nivelRequerido.ordinal();
     }
 

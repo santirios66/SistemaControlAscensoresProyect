@@ -5,16 +5,16 @@ import java.util.List;
 import util.RegistroEventos; // Importo la clase del paquete util
 
 /**
- * Clase qeu nos sirve par ala gestion de alertas de emergencias o falla en el
+ * Clase que nos sirve para la gestion de alertas de emergencias o falla en el
  * sistema del edifico
  * Maneja emergencia o fallas.
- * ESTA clase tien un agregacion con RegistroEventos.
+ * ESTA clase tiene un agregacion con RegistroEventos.
  */
 
 public class GestorAlertas {
     // Atributos
     // Listas para almacenar los mensajes de alertas activos.
-    Private List<String>alertas;
+    private List<String> alertas; // Corregida la 'P' mayúscula
     /**
      * relacion de agregacion con RegistroEventos.
      * La clase GestorAlertas utiliza una instancia de RegistroEventos para
@@ -52,8 +52,7 @@ public class GestorAlertas {
 
         // aqui registra el evento usando la clase RegistroEventos
         if (this.registroEventos != null) {
-            this.registroEventos.registraEvento("ALERTA CRITICA : " + mensaje);
-
+            this.registroEventos.registrarEvento("ALERTA CRITICA : " + mensaje); // Corregido: registrarEvento
         }
     }
 
@@ -63,10 +62,10 @@ public class GestorAlertas {
      * @param tipo El tipo de evento a registrar por ejemplo un fallo de sensor o la puerta abierta.
      */
 
-     publlic void registrarEvento(String tipo) {
+     public void registrarEvento(String tipo) { // Corregido: public en lugar de publlic
         // Usa la instancia de RegistroEventos para realizar el log
         if (this.registroEventos != null) {
-            this.registroEventos.registraEvento("EVENTO : " + tipo);
+            this.registroEventos.registrarEvento("EVENTO : " + tipo); // Corregido: registrarEvento
         }else{
             // en este caso solo ocurriria si el obejcto resgistroEventos se pasara com null
             System.err.println("No se pudo registrar el evento: Objeto RegistroEventos es nulo.");
