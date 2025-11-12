@@ -5,39 +5,53 @@ import java.util.List;
 
 public class Ascensor {
 
-    // Definición de los atributos de Ascensor
     private int id;
     private int pisoActual;
-    private String direccion;
-    private String estado;
+    private String direccion; // "subiendo", "bajando", "detenido"
+    private String estado;    // "en movimiento", "detenido", "en mantenimiento", "puerta abierta"
     private Puerta puerta;
     private List<Sensor> sensores;
     private PanelControl panel;
-    // Atributos adicionales extraídos del diagrama UML:
-    private int pisoDestino; 
     private int capacidad; 
-    private String indicador; 
+    private String indicador; // Muestra el piso actual o mensaje de error
 
-    public Ascensor(int id, int pisoActual, String direccion, String estado, int capacidad){
+    // El constructor ahora requiere el total de pisos para inicializar el panel
+    public Ascensor(int id, int capacidad, int totalPisos){
         this.id = id;
-        this.pisoActual = pisoActual;
-        // Inicializamos estos valores por defecto en el constructor
+        this.capacidad = capacidad;
+        
+        // Valores iniciales
+        this.pisoActual = 1; // Todos los ascensores empiezan en el piso 1
         this.direccion = "detenido"; 
         this.estado = "detenido";
-        this.capacidad = capacidad;
+        
+        // Composición 
         this.puerta = new Puerta();
         this.sensores = new ArrayList<>();
-        this.panel = new PanelControl();
-        this.pisoDestino = pisoActual; // El destino inicial es el piso actual
-        this.indicador = "Piso " + pisoActual; // Indicador inicial
+        this.panel = new PanelControl(totalPisos); 
+        
+        this.indicador = "Piso " + this.pisoActual; 
+
+        // añadir un sensor básico al ascensor
+        sensores.add(new Sensor("peso"));
     }
 
+    // Métodos 
     public void moverA(int pisoDestino){
-        this.pisoDestino = pisoDestino;
-        // aquí aplicas la lógica de movimiento real
-        System.out.println("Ascensor " + id + " moviéndose a piso " + pisoDestino);
+        // Lógica básica de dirección para el indicador
+        if (pisoDestino > pisoActual) {
+            this.direccion = "subiendo";
+        } else if (pisoDestino < pisoActual) {
+            this.direccion = "bajando";
+        } else {
+            this.direccion = "detenido";
+        }
+        
+        System.out.println("Ascensor " + id + " moviéndose a piso " + pisoDestino + " (" + this.direccion + ")");
         this.estado = "en movimiento";
-        // Lógica para actualizar pisoActual y direccion durante el movimiento
+        this.pisoActual = pisoDestino; // Simulación instantánea del movimiento
+        this.indicador = "Piso " + pisoDestino;
+        detener(); // Se detiene al llegar
     }
 
     public void abrirPuerta(){
@@ -46,20 +60,30 @@ public class Ascensor {
     }
 
     public void cerrarPuerta(){
-        puerta.cerrar();
-        this.estado = "detenido"; // Normalmente se detiene tras cerrar puertas
+        if (puerta.detectarObstaculo()) { // Usamos la lógica de la Puerta
+             System.out.println("No se puede cerrar la puerta, obstáculo detectado.");
+        } else {
+            puerta.cerrar();
+            this.estado = "detenido";
+        }
     }
 
     public void detener(){
         this.estado = "detenido";
+        this.direccion = "detenido";
         System.out.println("Ascensor " + id + " detenido.");
     }
 
     public void mostrarEstado(){
-        System.out.println("Ascensor " + id + " en piso " + pisoActual + " estado: " + estado + " | Destino: " + pisoDestino + " | Capacidad: " + capacidad);
+        System.out.println("--- ESTADO ASCENSOR " + id + " ---");
+        System.out.println("Piso Actual: " + pisoActual + " (" + indicador + ")");
+        System.out.println("Estado General: " + estado);
+        System.out.println("Dirección: " + direccion);
+        System.out.println("Capacidad: " + capacidad + " personas");
+        System.out.println("----------------------------------");
     }
 
-    // Getters
+    // Getters y Setters 
     public int getId() { return id; }
     public int getPisoActual() { return pisoActual; }
     public String getDireccion() { return direccion; }
@@ -67,11 +91,9 @@ public class Ascensor {
     public Puerta getPuerta() { return puerta; }
     public List<Sensor> getSensores() { return sensores; }
     public PanelControl getPanel() { return panel; }
-    public int getPisoDestino() { return pisoDestino; }
     public int getCapacidad() { return capacidad; }
     public String getIndicador() { return indicador; }
 
-    // Setters
     public void setDireccion(String direccion) { this.direccion = direccion; }
     public void setEstado(String estado) { this.estado = estado; }  
     public void setPisoActual(int pisoActual) { this.pisoActual = pisoActual; }
@@ -79,7 +101,6 @@ public class Ascensor {
     public void setPuerta(Puerta puerta) { this.puerta = puerta; }
     public void setSensores(List<Sensor> sensores) { this.sensores = sensores; }
     public void setPanel(PanelControl panel) { this.panel = panel; }
-    public void setPisoDestino(int pisoDestino) { this.pisoDestino = pisoDestino; }
     public void setCapacidad(int capacidad) { this.capacidad = capacidad; }
     public void setIndicador(String indicador) { this.indicador = indicador; }
 
@@ -91,12 +112,7 @@ public class Ascensor {
                 ", pisoActual=" + pisoActual +
                 ", direccion='" + direccion + '\'' +
                 ", estado='" + estado + '\'' +
-                ", puerta=" + puerta +
-                ", sensores=" + sensores +
-                ", panel=" + panel +
-                ", pisoDestino=" + pisoDestino +
                 ", capacidad=" + capacidad +
-                ", indicador='" + indicador + '\'' +
                 '}';
     }
 }
