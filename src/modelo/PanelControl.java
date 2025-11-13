@@ -31,7 +31,20 @@ public class PanelControl {
         for (BotonAscensor boton : botones) {
             if (boton.getPisoDestino() == pisoDestino) {
                 boton.presionar(); // Llama al método sobrescrito del botón
+                System.out.println(" Botón del piso " + pisoDestino + " encendido.");
                 return; // Termina la búsqueda una vez presionado
+            }
+        }
+        System.out.println("Error: El piso " + pisoDestino + " no existe o no tiene botón.");
+    }
+
+    // metodo para apagar la luz del boton cuando se llega al piso
+    public void apagarLuzBoton(int pisoDestino) {
+        for (BotonAscensor boton : botones) {
+            if (boton.getPisoDestino() == pisoDestino) {
+                boton.apagarLuz(); // Apaga la luz del botón
+                System.out.println(" Luz del botón " + pisoDestino + " apagada.");
+                return; // Termina la búsqueda una vez apagada la luz
             }
         }
         System.out.println("Error: El piso " + pisoDestino + " no existe o no tiene botón.");

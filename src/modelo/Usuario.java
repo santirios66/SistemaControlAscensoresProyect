@@ -25,9 +25,50 @@ public class Usuario {
     }
 
     // Solicita el ascensor en una dirección
-    public void solicitarAscensor(String direccion) {
-        System.out.println(nombre + " solicita el ascensor para " + direccion + " desde el piso " + pisoActual);
+public void solicitarAscensor(Edificio edificio, String direccion) {
+    Piso piso = edificio.getPisos().get(pisoActual - 1);
+
+    // Presiona el botón y verifica si es válido
+    boolean valido = piso.solicitarAscensor(direccion, edificio.getPisos().size());
+    if (!valido) {
+        System.out.println(nombre + " no puede solicitar el ascensor hacia " + direccion);
+        return; // corta la ejecución aquí
     }
+
+    System.out.println(nombre + " solicita el ascensor hacia " + direccion);
+
+    Ascensor ascensor = edificio.getAscensorCercano(pisoActual);
+    if (ascensor != null) {
+        ascensor.moverA(pisoActual);
+        ascensor.llegarAlPiso(piso);
+        System.out.println(nombre + " entra al ascensor " + ascensor.getId());
+    } else {
+        System.out.println("No hay ascensores disponibles.");
+    }
+}
+
+    public void irAPisoDestino(int pisoDestino, Ascensor ascensor, Edificio edificio) {
+    // 1 Selecciona el piso
+    seleccionarPiso(pisoDestino);
+
+    //  Presiona botón interno y enciende luz
+    ascensor.getPanel().presionarBoton(pisoDestino);
+    System.out.println(" Botón del piso " + pisoDestino + " encendido en el panel del ascensor " + ascensor.getId());
+
+    //  Mueve el ascensor al piso destino
+    ascensor.moverA(pisoDestino);
+
+    //  Llega al piso y abre puerta
+    ascensor.llegarAlPiso(edificio.getPisos().get(pisoDestino - 1));
+
+    //  Apaga la luz del botón al llegar
+    System.out.println(" Luz del botón " + pisoDestino + " apagada (llegó al destino).");
+
+    //  Actualiza piso actual del usuario
+    this.pisoActual = pisoDestino;
+    System.out.println(getNombre() + " ha llegado al piso " + pisoDestino + " y sale del ascensor.");
+}
+
 
     // Selecciona el piso al que desea ir
     public void seleccionarPiso(int piso) {

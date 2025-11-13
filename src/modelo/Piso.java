@@ -15,15 +15,28 @@ package modelo;
     }
 
     // Método para solicitar el ascensor
-    public void solicitarAscensor(String direccion) {
-        if (direccion.equalsIgnoreCase("subir")) {
-            botonSubir.presionar();
-        } else if (direccion.equalsIgnoreCase("bajar")) {
-            botonBajar.presionar();
-        } else {
-            System.out.println("Dirección no válida. Usa 'subir' o 'bajar'.");
-        }
+// Clase Piso
+public boolean solicitarAscensor(String direccion, int totalPisos) {
+    if (direccion.equalsIgnoreCase("subir") && numero == totalPisos) {
+        System.out.println("ERROR: No se puede subir del último piso (" + numero + ").");
+        return false; // solicitud inválida
     }
+    if (direccion.equalsIgnoreCase("bajar") && numero == 1) {
+        System.out.println("ERROR: No se puede bajar del primer piso (" + numero + ").");
+        return false; // solicitud inválida
+    }
+
+    if (direccion.equalsIgnoreCase("subir")) {
+        botonSubir.presionar();
+    } else if (direccion.equalsIgnoreCase("bajar")) {
+        botonBajar.presionar();
+    } else {
+        System.out.println("Dirección no válida. Usa 'subir' o 'bajar'.");
+        return false;
+    }
+
+    return true; // solicitud válida
+}
 
     // Getters
     public int getNumero() { return numero; }

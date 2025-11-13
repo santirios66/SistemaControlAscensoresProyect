@@ -13,10 +13,11 @@ public class Puerta {
 
     // Metodos
 
-    public void abrir() {
+public void abrir() {
         abierta = true;
         System.out.println("Puerta abierta");
-    }
+    
+}
 
 
      //Intenta cerrar la puerta. Si el sensor detecta un obstáculo,

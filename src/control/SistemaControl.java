@@ -22,6 +22,7 @@ public class SistemaControl {
         this.gestorMantenimiento = new GestorMantenimiento(this.registroEventos); // Ahora espera RegistroEventos
     }
 
+    
     // procesa una solicitud de ascensor
     public void procesarSolicitud(Piso piso, String direccion){
         System.out.println("Procesando solicitud desde piso " + piso.getNumero() + " hacia "  + direccion);

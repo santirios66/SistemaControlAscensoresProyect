@@ -6,6 +6,7 @@ import modelo.Ascensor;
 import modelo.Edificio;
 import modelo.Solicitud;
 
+
 /*
  * Clase que gestiona las solicitudes de ascensor realizadas por los pisos.
  * forma parte del sistema de control del edificio.
@@ -44,8 +45,7 @@ public class GestorSolicitudes {
      * @return el ascensor asignado o null si no hay solicitudes o ascensores.
      */
 
-    
-     public Ascensor asignarAscensor() {
+    public Ascensor asignarAscensor() {
         if (solicitudes.isEmpty()) {
             System.out.println("No hay solicitudes pendientes.");
             return null;
@@ -59,7 +59,7 @@ public class GestorSolicitudes {
 
         if (ascensor != null) {
             System.out.println("Ascensor " + ascensor.getId() +
-                               " asignado a solicitud desde piso " + pisoSolicitado);
+                    " asignado a solicitud desde piso " + pisoSolicitado);
             ascensor.moverA(pisoSolicitado);
         } else {
             System.out.println("No hay ascensores disponibles en este momento.");
@@ -68,7 +68,7 @@ public class GestorSolicitudes {
         return ascensor;
     }
 
-    //muestra las solicitudes pendientes
+    // muestra las solicitudes pendientes
     public void mostrarSolicitudes() {
         System.out.println("Solicitudes pendientes : " + solicitudes);
     }

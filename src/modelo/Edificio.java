@@ -3,9 +3,8 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+//Representa un edificio que contiene pisos y ascensores.
 
-  //Representa un edificio que contiene pisos y ascensores.
- 
 public class Edificio {
 
     // Atributos
@@ -18,6 +17,19 @@ public class Edificio {
         this.nombre = nombre;
         this.pisos = new ArrayList<>();
         this.ascensores = new ArrayList<>();
+
+    }
+
+    /**
+     * Crea y agrega los pisos numerados del 1 hasta totalPisos en el edificio dado.
+     *
+     * @param edificio   Edificio donde se agregarán los pisos
+     * @param totalPisos cantidad de pisos a crear debe ser >= 1
+     */
+    public void crearPisos(int totalPisos) {
+        for (int i = 1; i <= totalPisos; i++) {
+            this.agregarPiso(new Piso(i));
+        }
     }
 
     // Agregar piso
@@ -30,9 +42,8 @@ public class Edificio {
         ascensores.add(ascensor);
     }
 
-    
-      //Devuelve el ascensor más cercano al piso indicado.
-     
+    // Devuelve el ascensor más cercano al piso indicado.
+
     public Ascensor getAscensorCercano(int pisoActual) {
         if (ascensores.isEmpty()) {
             return null;
@@ -54,10 +65,13 @@ public class Edificio {
 
     // Muestra estado del edificio
     public void mostrarEstado() {
-        System.out.println("=== Edificio " + nombre + " ===");
+        System.out.println("=== RESUMEN EDIFICIO: " + nombre + " ===");
+        System.out.println("Pisos: " + pisos.size());
+        System.out.println("Ascensores: " + ascensores.size());
         for (Ascensor a : ascensores) {
             a.mostrarEstado();
         }
+        System.out.println("=========================================");
     }
 
     // Getters

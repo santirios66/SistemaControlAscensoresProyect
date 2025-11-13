@@ -15,7 +15,6 @@ public class Sensor {
     //Metodos 
     public boolean detectar(){
         // Simula detección aqui devuelve true si hay obstáculos.
-        System.out.println("Sensor de " + tipo + " detectando....");
         return activo;
     }
 
