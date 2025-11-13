@@ -52,19 +52,54 @@ public class SimuladorSistemaAscensores {
 		sistema.getGestorSolicitudes().mostrarSolicitudes();
 		Ascensor asignado1 = sistema.getGestorSolicitudes().asignarAscensor();
 
-		// 8) Simulación del embarque en ascensor asignado
+		// 8) Simulación del embarque en ascensor asignado (Ana)
 		if (asignado1 != null) {
-			System.out.println("Usuario entrando y seleccionando destino...");
 			asignado1.abrirPuerta();
-			// supongamos Ana entró y selecciona piso 7
+			// Ana entra y selecciona piso 7
 			uAna.seleccionarPiso(7);
+			System.out.println(uAna.getNombre() + " entró al ascensor " + asignado1.getId() + " y presionó el botón del piso " + uAna.getPisoDestino() + ".");
 			asignado1.getPanel().presionarBoton(uAna.getPisoDestino());
 			// Mantener puerta abierta 2 segundos y luego mover
 			asignado1.mantenerPuertaAbierta(2);
+			// Antes de mover, informar si va a subir o bajar
+			int origenAna = asignado1.getPisoActual();
+			int destinoAna = uAna.getPisoDestino();
+			if (destinoAna < origenAna) {
+				System.out.println("Ascensor " + asignado1.getId() + ": cerrando puertas y bajando de " + origenAna + " a " + destinoAna + "...");
+			} else if (destinoAna > origenAna) {
+				System.out.println("Ascensor " + asignado1.getId() + ": cerrando puertas y subiendo de " + origenAna + " a " + destinoAna + "...");
+			} else {
+				System.out.println("Ascensor " + asignado1.getId() + ": ya está en el piso " + destinoAna + ", no se mueve.");
+			}
+			asignado1.cerrarPuerta();
 			// Mover tras mantenerla abierta (no bloqueante; su estado ya fue actualizado por temporizador)
 			asignado1.moverA(uAna.getPisoDestino());
 			asignado1.abrirPuerta();
 			asignado1.cerrarPuerta();
+		}
+
+		// 8.b) Procesar la siguiente solicitud (Luis) y mostrar que entra y presiona un botón
+		System.out.println("Procesando siguiente solicitud pendiente (si existe)...");
+		Ascensor asignadoLuis = sistema.getGestorSolicitudes().asignarAscensor();
+		if (asignadoLuis != null) {
+			asignadoLuis.abrirPuerta();
+			// Simulamos que Luis entra y quiere bajar hasta el piso 1
+			uLuis.seleccionarPiso(1);
+			System.out.println(uLuis.getNombre() + " entró al ascensor " + asignadoLuis.getId() + " y presionó el botón del piso " + uLuis.getPisoDestino() + ".");
+			asignadoLuis.getPanel().presionarBoton(uLuis.getPisoDestino());
+			// Informar claramente si el ascensor va a cerrar puertas y bajar/subir
+			int origenLuis = asignadoLuis.getPisoActual();
+			int destinoLuis = uLuis.getPisoDestino();
+			if (destinoLuis < origenLuis) {
+				System.out.println("Ascensor " + asignadoLuis.getId() + ": cerrando puertas y bajando de " + origenLuis + " a " + destinoLuis + "...");
+			} else if (destinoLuis > origenLuis) {
+				System.out.println("Ascensor " + asignadoLuis.getId() + ": cerrando puertas y subiendo de " + origenLuis + " a " + destinoLuis + "...");
+			} else {
+				System.out.println("Ascensor " + asignadoLuis.getId() + ": ya está en el piso " + destinoLuis + ", no se mueve.");
+			}
+			asignadoLuis.mantenerPuertaAbierta(1);
+			asignadoLuis.cerrarPuerta();
+			asignadoLuis.moverA(uLuis.getPisoDestino());
 		}
 
 		// 9) Simular que durante el cierre de puertas se detecta un obstáculo
