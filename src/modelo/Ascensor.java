@@ -99,8 +99,11 @@ public void llegarAlPiso(Piso piso) {
      * Mantiene la puerta abierta por una duración (segundos) y la cierra
      * automáticamente al terminar. No bloqueante.
      */
+    private boolean puertaYaCerrada = false;
+
 public void mantenerPuertaAbierta(int segundos) {
-    System.out.println("Ascensor " + id + ": Manteniendo puerta abierta por " + segundos + "s");
+    if (puertaYaCerrada) return; // evita reimprimir
+    puertaYaCerrada = true;
 
     Temporizador t = new Temporizador(segundos);
     t.iniciar(() -> {
@@ -113,6 +116,7 @@ public void mantenerPuertaAbierta(int segundos) {
         }
     });
 }
+
 
 
 
