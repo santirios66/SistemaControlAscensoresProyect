@@ -42,7 +42,6 @@ Use encapsulacion para proteger los atributos, La herencia para especilizar los 
 ││   │   ├── GestorSolicitudes.java
 ││   │   ├── GestorAlertas.java
 ││   │   ├── GestorMantenimiento.java
-││   │   ├── ResumenSistema.java
          
 │    │
 │    ├── modelo/
