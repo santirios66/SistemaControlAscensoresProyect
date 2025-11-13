@@ -62,6 +62,15 @@ public class SimuladorSistemaAscensores {
 			}
 			ascensorParaAna.cerrarPuerta();
 			ascensorParaAna.moverA(destinoAna);
+			// Al llegar, abrir puerta, detectar posible obstáculo y cerrar
+			ascensorParaAna.abrirPuerta();
+			System.out.println("Comprobando sensor de obstáculo en puerta para Ana...");
+			if (ascensorParaAna.getPuerta().detectarObstaculo()) {
+				System.out.println("Obstáculo detectado al llegar al piso " + destinoAna + ", la puerta no se cerrará.");
+			} else {
+				System.out.println("No hay obstáculo en puerta en piso " + destinoAna + ". Intentando cerrar.");
+				ascensorParaAna.cerrarPuerta();
+			}
 		}
 
 		// Ahora Luis solicita
@@ -81,6 +90,15 @@ public class SimuladorSistemaAscensores {
 			}
 			ascensorParaLuis.cerrarPuerta();
 			ascensorParaLuis.moverA(destinoLuisInit);
+			// Al llegar, abrir puerta, detectar posible obstáculo y cerrar
+			ascensorParaLuis.abrirPuerta();
+			System.out.println("Comprobando sensor de obstáculo en puerta para Luis...");
+			if (ascensorParaLuis.getPuerta().detectarObstaculo()) {
+				System.out.println("Obstáculo detectado al llegar al piso " + destinoLuisInit + ", la puerta no se cerrará.");
+			} else {
+				System.out.println("No hay obstáculo en puerta en piso " + destinoLuisInit + ". Intentando cerrar.");
+				ascensorParaLuis.cerrarPuerta();
+			}
 		}
 
 		// 7) Asignamos y procesamos la cola explícitamente (simulando tiempo)
