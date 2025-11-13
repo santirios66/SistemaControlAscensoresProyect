@@ -66,6 +66,22 @@ public class SimuladorSistemaAscensores {
 
 		// Ahora Luis solicita
 		solicitarYProcesar(sistema, edificio, uLuis, "bajar"); // Luis en piso 6 solicita bajar
+		// Simular que Luis entra al ascensor que llega y presiona el botón (ej. piso 1)
+		Ascensor ascensorParaLuis = edificio.getAscensorCercano(uLuis.getPisoActual());
+		if (ascensorParaLuis != null) {
+			System.out.println(uLuis.getNombre() + " entró al ascensor " + ascensorParaLuis.getId() + " y presionó el botón del piso 1.");
+			uLuis.seleccionarPiso(1);
+			ascensorParaLuis.getPanel().presionarBoton(uLuis.getPisoDestino());
+			int origenLuisInit = ascensorParaLuis.getPisoActual();
+			int destinoLuisInit = uLuis.getPisoDestino();
+			if (destinoLuisInit < origenLuisInit) {
+				System.out.println("Ascensor " + ascensorParaLuis.getId() + ": cerrando puertas y bajando de " + origenLuisInit + " a " + destinoLuisInit + "...");
+			} else if (destinoLuisInit > origenLuisInit) {
+				System.out.println("Ascensor " + ascensorParaLuis.getId() + ": cerrando puertas y subiendo de " + origenLuisInit + " a " + destinoLuisInit + "...");
+			}
+			ascensorParaLuis.cerrarPuerta();
+			ascensorParaLuis.moverA(destinoLuisInit);
+		}
 
 		// 7) Asignamos y procesamos la cola explícitamente (simulando tiempo)
 		System.out.println("Asignando ascensores a solicitudes pendientes...");
