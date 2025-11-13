@@ -44,7 +44,27 @@ public class SimuladorSistemaAscensores {
 
 		// 6) Escenario: varios usuarios solicitan el ascensor en secuencia
 		System.out.println("\n--- solicitudes iniciales ---");
+		// Ana solicita y el sistema asigna el ascensor automáticamente.
 		solicitarYProcesar(sistema, edificio, uAna, "subir"); // Ana en piso 2 solicita subir
+		// Simular que Ana entra al ascensor que llegó a su piso y presiona el piso 7
+		Ascensor ascensorParaAna = edificio.getAscensorCercano(uAna.getPisoActual());
+		if (ascensorParaAna != null) {
+			System.out.println(uAna.getNombre() + " entró al ascensor " + ascensorParaAna.getId() + " y presionó el botón del piso 7.");
+			uAna.seleccionarPiso(7);
+			ascensorParaAna.getPanel().presionarBoton(uAna.getPisoDestino());
+			// Informar dirección y mover
+			int origenAna = ascensorParaAna.getPisoActual();
+			int destinoAna = uAna.getPisoDestino();
+			if (destinoAna < origenAna) {
+				System.out.println("Ascensor " + ascensorParaAna.getId() + ": cerrando puertas y bajando de " + origenAna + " a " + destinoAna + "...");
+			} else if (destinoAna > origenAna) {
+				System.out.println("Ascensor " + ascensorParaAna.getId() + ": cerrando puertas y subiendo de " + origenAna + " a " + destinoAna + "...");
+			}
+			ascensorParaAna.cerrarPuerta();
+			ascensorParaAna.moverA(destinoAna);
+		}
+
+		// Ahora Luis solicita
 		solicitarYProcesar(sistema, edificio, uLuis, "bajar"); // Luis en piso 6 solicita bajar
 
 		// 7) Asignamos y procesamos la cola explícitamente (simulando tiempo)
