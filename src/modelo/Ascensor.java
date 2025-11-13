@@ -2,6 +2,7 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import util.Temporizador;
 
 public class Ascensor {
 
@@ -114,5 +115,26 @@ public class Ascensor {
                 ", estado='" + estado + '\'' +
                 ", capacidad=" + capacidad +
                 '}';
+    }
+
+    /**
+     * Mantiene la puerta abierta por una duración (segundos) y la cierra
+     * automáticamente al terminar. No bloqueante.
+     */
+    public void mantenerPuertaAbierta(int segundos) {
+        System.out.println("Ascensor " + id + ": Manteniendo puerta abierta por " + segundos + "s");
+        abrirPuerta();
+
+        // Usamos un temporizador no bloqueante para cerrar la puerta más tarde
+        Temporizador t = new Temporizador(segundos);
+        t.iniciar(() -> {
+            if (!puerta.detectarObstaculo()) {
+                puerta.cerrar();
+                this.estado = "detenido";
+                System.out.println("Ascensor " + id + ": Puerta cerrada después de mantenerla abierta.");
+            } else {
+                System.out.println("Ascensor " + id + ": No se pudo cerrar la puerta, obstáculo detectado.");
+            }
+        });
     }
 }

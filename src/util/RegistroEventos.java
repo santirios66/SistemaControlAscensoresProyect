@@ -1,7 +1,8 @@
 package util;
 
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,11 +16,12 @@ public class RegistroEventos {
     }
 
     /**
-     * Registra un evento con su descripción y hora actual.
+     * Registra un evento con su descripción y hora actual (ISO-8601).
      * @param descripcion La descripción del evento.
      */
     public void registrarEvento(String descripcion) {
-        String logEntry = new Date().toString() + " - " + descripcion;
+        String timestamp = DateTimeFormatter.ISO_INSTANT.format(Instant.now());
+        String logEntry = timestamp + " - " + descripcion;
         this.eventos.add(logEntry);
         System.out.println("[LOG] " + logEntry);
     }
@@ -31,7 +33,7 @@ public class RegistroEventos {
     public List<String> mostrarEventos() {
         return eventos;
     }
-    
+
     @Override
     public String toString() {
         return "RegistroEventos{cantidadEventos=" + eventos.size() + '}';

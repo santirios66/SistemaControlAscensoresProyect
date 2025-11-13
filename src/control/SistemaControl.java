@@ -2,7 +2,7 @@ package control;
 
 import modelo.Edificio;
 import modelo.Piso;
-import modelo.Ascensor; // <-- IMPORTACIÓN NECESARIA
+import modelo.Ascensor; 
 import util.RegistroEventos; 
 
 public class SistemaControl {

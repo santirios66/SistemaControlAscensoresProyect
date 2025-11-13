@@ -1,9 +1,10 @@
 package control;
 
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import modelo.Ascensor;
 import modelo.Edificio;
+import modelo.Solicitud;
 
 /*
  * Clase que gestiona las solicitudes de ascensor realizadas por los pisos.
@@ -11,14 +12,14 @@ import modelo.Edificio;
  */
 
 public class GestorSolicitudes {
-    // Cola de solicitudes en formato piso- direccion.
-    private Queue<String> solicitudes;
-    private Edificio edificio; // aqui la referencia al edifico para poder asignar ascensores
+    // Cola de solicitudes como objetos Solicitud (thread-safe)
+    private Queue<Solicitud> solicitudes;
+    private Edificio edificio; // referencia al edificio para poder asignar ascensores
 
     // Constructor
     public GestorSolicitudes(Edificio edificio) {
         this.edificio = edificio;
-        this.solicitudes = new LinkedList<>();
+        this.solicitudes = new ConcurrentLinkedQueue<>();
     }
 
     /**
@@ -29,9 +30,12 @@ public class GestorSolicitudes {
      */
 
     public void registrarSolicitud(int piso, String direccion) {
-        String solicitud = piso + "-" + direccion;
+        registrarSolicitud(new Solicitud(piso, direccion));
+    }
+
+    public void registrarSolicitud(Solicitud solicitud) {
         solicitudes.add(solicitud);
-        System.out.println("Solicitud registrada : Piso " + piso + " (" + direccion + ")");
+        System.out.println("Solicitud registrada : " + solicitud);
     }
 
     /**
@@ -48,9 +52,8 @@ public class GestorSolicitudes {
         }
 
         // Obtiene y elimina la primera solicitud en la cola
-        String solicitud = solicitudes.poll();
-        String[] partes = solicitud.split("-");
-        int pisoSolicitado = Integer.parseInt(partes[0]);
+        Solicitud solicitud = solicitudes.poll();
+        int pisoSolicitado = solicitud.getPiso();
 
         Ascensor ascensor = edificio.getAscensorCercano(pisoSolicitado);
 

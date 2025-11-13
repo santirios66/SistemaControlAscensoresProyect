@@ -59,6 +59,7 @@ public class PanelControl {
      * 
      * @param botones La nueva lista de BotonAscensor.
      */
+    
     // Setters
     public void setBotones(List<BotonAscensor> botones) {
         this.botones = botones;

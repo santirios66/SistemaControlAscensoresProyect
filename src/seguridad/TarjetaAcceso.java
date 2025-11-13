@@ -32,8 +32,16 @@ public class TarjetaAcceso {
 
     // --- Método para validar acceso ---
     public boolean validarAcceso(NivelAcceso nivelRequerido) {
+        // Manejo seguro en caso de parámetros nulos
+        if (nivelRequerido == null) {
+            // Si no se especifica nivel requerido, asumimos que la tarjeta
+            // solo necesita existir para permitir alguna operación.
+            return this.nivelAcceso != null;
+        }
+
         // Orden lógico de seguridad: ADMINISTRADOR > MEDIO > BASICO
         // El método ordinal() devuelve la posición en el enum (BASICO=0, MEDIO=1, ADMIN=2)
+        if (this.nivelAcceso == null) return false;
         return this.nivelAcceso.ordinal() >= nivelRequerido.ordinal();
     }
 

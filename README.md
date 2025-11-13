@@ -42,6 +42,7 @@ Use encapsulacion para proteger los atributos, La herencia para especilizar los 
 ││   │   ├── GestorSolicitudes.java
 ││   │   ├── GestorAlertas.java
 ││   │   ├── GestorMantenimiento.java
+││   │   ├── ResumenSistema.java
          
 │    │
 │    ├── modelo/
@@ -53,6 +54,8 @@ Use encapsulacion para proteger los atributos, La herencia para especilizar los 
 ││   │   ├── Boton.java
 ││   │   ├── BotonPiso.java
 ││   │   ├── BotonAscensor.java
+││   │   ├── Solicitud.java
+││   │   ├── CreadorPisos.java
 ││   │   └── PanelControl.java    
 │    │   └── Usuario.java
 ||   |
@@ -90,3 +93,4 @@ Clases principales :
 
 Conclusión
 en conclusion el desarrollo del Sistema de Control de Ascensores me ayudo aplicar de forma practica los conceptos de POO en java, simulando un entorno real y muy completo. Este proyecto  demuestra como  la abstraccion y la modularidad facilitan el mantenimiento , la escalabilidad y la claridad del codigo.
+
